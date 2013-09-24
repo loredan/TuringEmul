@@ -1,11 +1,15 @@
 package com.turingemul;
 
 import android.text.Spannable;
+import android.text.SpannedString;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.SortedMap;
 
 /**
  * Created by Loredan on 02.09.13.
@@ -37,17 +41,17 @@ public class Program
         temp = new Symbol("\u2202"); //delta
         outAB.add(1, temp);
 
-        commands = new HashMap<String, String>();
+        commands = new LinkedHashMap<String, String>();
         commands.put("11", "1R1");
     }
 
-    public ArrayList<Spannable> listing()
+    public ArrayList<SpannedString> listing()
     {
-        ArrayList<Spannable> list = new ArrayList<Spannable>();
+        ArrayList<SpannedString> list = new ArrayList<SpannedString>();
         for (String key : commands.keySet())
         {
             String value = commands.get(key);
-            Spannable line = (Spannable) TextUtils.concat(
+            SpannedString line = (SpannedString) TextUtils.concat(
                     inAB.get(Integer.parseInt(key.substring(0, 1))).getSymbol(),
                     outAB.get(Integer.parseInt(key.substring(1, 2))).getSymbol(), "\u2192",
                     outAB.get(Integer.parseInt(value.substring(0, 1))).getSymbol(),
@@ -56,6 +60,31 @@ public class Program
             list.add(line);
         }
         return list;
+    }
+
+    public SpannedString get(int position) throws IndexOutOfBoundsException
+    {
+        if(commands.size()<=position)
+            throw new IndexOutOfBoundsException();
+        String key = (String) commands.keySet().toArray()[0];
+        String value;
+        for (String _key: commands.keySet())
+        {
+            if (position==0)
+            {
+                key = _key;
+                break;
+            }
+            position--;
+        }
+        value = commands.get(key);
+        SpannedString line = (SpannedString) TextUtils.concat(
+                inAB.get(Integer.parseInt(key.substring(0, 1))).getSymbol(),
+                outAB.get(Integer.parseInt(key.substring(1, 2))).getSymbol(), "\u2192",
+                outAB.get(Integer.parseInt(value.substring(0, 1))).getSymbol(),
+                value.substring(1, 2),
+                inAB.get(Integer.parseInt(value.substring(2, 3))).getSymbol());
+        return line;
     }
 
     public void add(String state, String action)

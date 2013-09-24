@@ -46,13 +46,11 @@ public class ProgramActivity extends Activity
             map.put(COMMAND_LINE, listing.get(i));
             data.add(i, map);
         }
-        SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.listing_element, new String[]{COMMAND_LINE}, new int[]{R.id.instruction});
-        Fragment frag = getFragmentManager().findFragmentById(R.id.fragment1);
+        //SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.listing_element, new String[]{COMMAND_LINE}, new int[]{R.id.instruction});
+        ListingAdapter adapter = new ListingAdapter(this, program);
+        Fragment frag = getFragmentManager().findFragmentById(R.id.listing);
         ListView view = (ListView) frag.getView().findViewById(R.id.commandlist);
-        SpannableString temp = new SpannableString("S0");
-        temp.setSpan(new SubscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        temp.setSpan(new RelativeSizeSpan((float) 0.75), 1, 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        ((TextView)findViewById(R.id.tv_test)).setText(listing.get(0));
+        //((TextView)findViewById(R.id.tv_test)).setText(listing.get(0));
         view.setAdapter(adapter);
     }
 

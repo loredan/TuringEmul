@@ -5,11 +5,13 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.CharacterStyle;
+import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.UnderlineSpan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +53,7 @@ public class Symbol
     public Symbol(String _base)
     {
         base = _base;
+        spans = new ArrayList<SpanElement>();
     }
     public void addSpan(int style, int begin, int end)
     {
@@ -66,9 +69,11 @@ public class Symbol
             switch (span.getStyle())
             {
                 case SUPERSCRIPT:
+                    symbol.setSpan(new RelativeSizeSpan((float) 0.5), span.getBegin(), span.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     style = new SuperscriptSpan();
                     break;
                 case SUBSCRIPT:
+                    symbol.setSpan(new RelativeSizeSpan((float) 0.5), span.getBegin(), span.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     style = new SubscriptSpan();
                     break;
                 case BOLD:
