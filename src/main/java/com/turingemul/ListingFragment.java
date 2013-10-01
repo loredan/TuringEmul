@@ -13,27 +13,9 @@ import android.widget.ListView;
  */
 public class ListingFragment extends Fragment
 {
-    ArrayAdapter<String> adapter;
-
-    public static ListingFragment newInstance()
-    {
-        ListingFragment fragment = new ListingFragment();
-        //fragment.adapter = new ArrayAdapter<String>(fragment.getActivity(), android.R.layout.simple_list_item_1);
-        return fragment;
-    }
-
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        //adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
-    }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle)
     {
         super.onCreateView(inflater, group, bundle);
-        //ListView view = (ListView) inflater.inflate(R.layout.listing, null);
-
-        //view.setAdapter(adapter);
         return inflater.inflate(R.layout.listing, null);
     }
 }

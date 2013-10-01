@@ -4,5 +4,6 @@
     <string name="app_name">Turing machine emulator</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="add_symbol">Add symbol</string>
+    <string name="arrow">→</string>
 </resources>

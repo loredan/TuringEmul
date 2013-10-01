@@ -11,8 +11,13 @@ import android.text.SpannedString;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SubscriptSpan;
 import android.text.style.SuperscriptSpan;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -23,37 +28,61 @@ import java.util.Map;
 
 public class ProgramActivity extends Activity
 {
+    public DisplayMetrics metrics;
     public Program program;
-    public ListingFragment listingFragment;
-    private FragmentTransaction ftrans;
-    final String COMMAND_LINE = "command_line";
+
+    public float prevX = 0;
+    public float prevY = 0;
+    public static final int NONE = 0;
+    public static final int INNER = 1;
+    public static final int OUTER = 2;
+    public int selected = NONE;
+    private float relativeX;
+    private float relativeY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        SpanStyles.init();
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
         program = new Program();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.program);
-//        listingFragment = ListingFragment.newInstance();
-//        ftrans = getFragmentManager().beginTransaction();
-//        ftrans.add(R.id.parent, listingFragment);
-//        ftrans.commit();
-        ArrayList<SpannedString> listing = program.listing();
-        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(listing.size());
-        for(int i = 0; i < listing.size(); i++)
-        {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(COMMAND_LINE, listing.get(i));
-            data.add(i, map);
-        }
-        //SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.listing_element, new String[]{COMMAND_LINE}, new int[]{R.id.instruction});
-        ListingAdapter adapter = new ListingAdapter(this, program);
+        ListingAdapter listingAdapter = new ListingAdapter(this, program);
         Fragment frag = getFragmentManager().findFragmentById(R.id.listing);
-        ListView view = (ListView) frag.getView().findViewById(R.id.commandlist);
-        //((TextView)findViewById(R.id.tv_test)).setText(listing.get(0));
-        view.setAdapter(adapter);
+        findViewById(R.id.inner_alphabet).setTranslationX((float) metrics.widthPixels / 2);
+        ListView listView = (ListView) frag.getView().findViewById(R.id.commandlist);
+        listView.setAdapter(listingAdapter);
+        AlphabetAdapter innerAlphabetAdapter = new AlphabetAdapter(this, program,
+                                                                   AlphabetAdapter.TYPE_INNER);
+        frag = getFragmentManager().findFragmentById(R.id.inner_alphabet);
+        GridView gridView = (GridView) frag.getView().findViewById(R.id.alphabet);
+        gridView.setAdapter(innerAlphabetAdapter);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                Log.d("MotionEvent", "ACTION_DOWN");
+                if (isInside(event.getX(), event.getY(), findViewById(R.id.inner_alphabet)))
+                {
+                    selected = INNER;
+                    relativeX = event.getX() - findViewById(R.id.inner_alphabet).getLeft();
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d("MotionEvent", "ACTION_MOVE");
+                moveFragment(selected, event, relativeX);
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("MotionEvent", "ACTION_UP");
+        }
+        return super.onTouchEvent(event);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -63,4 +92,34 @@ public class ProgramActivity extends Activity
         return true;
     }
 
+    private boolean isInside(float x, float y, View view)
+    {
+        if (view.getLeft() <= x && x <= view.getRight())
+            if (view.getTop() <= y && y <= view.getBottom())
+            {
+                Log.d("Point inside", "true");
+                return true;
+            }
+        Log.d("Point inside", "false");
+        return false;
+    }
+
+    private void moveFragment(int selected, MotionEvent event, float relativeX)
+    {
+        View fragment;
+        switch (selected)
+        {
+            case INNER:
+                fragment = findViewById(R.id.inner_alphabet);
+                if (event.getX() - relativeX >= 0 &&
+                    event.getX() - relativeX + R.dimen.sidebar <= metrics.widthPixels)
+                {
+                    fragment.setTranslationX(event.getX() - relativeX);
+                }
+                else
+                {
+                    relativeX = event.getX() - fragment.getLeft();
+                }
+        }
+    }
 }

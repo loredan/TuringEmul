@@ -19,11 +19,6 @@ import java.util.List;
  */
 public class Symbol
 {
-    public static final int SUPERSCRIPT = 0;
-    public static final int SUBSCRIPT = 1;
-    public static final int BOLD = 2;
-    public static final int ITALIC = 3;
-    public static final int UNDERLINE = 4;
     private String base;
     private List<SpanElement> spans;
     private static class SpanElement
@@ -68,21 +63,21 @@ public class Symbol
             CharacterStyle style;
             switch (span.getStyle())
             {
-                case SUPERSCRIPT:
+                case SpanStyles.SUPERSCRIPT:
                     symbol.setSpan(new RelativeSizeSpan((float) 0.5), span.getBegin(), span.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     style = new SuperscriptSpan();
                     break;
-                case SUBSCRIPT:
+                case SpanStyles.SUBSCRIPT:
                     symbol.setSpan(new RelativeSizeSpan((float) 0.5), span.getBegin(), span.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     style = new SubscriptSpan();
                     break;
-                case BOLD:
+                case SpanStyles.BOLD:
                     style = new StyleSpan(Typeface.BOLD);
                     break;
-                case ITALIC:
+                case SpanStyles.ITALIC:
                     style = new StyleSpan(Typeface.ITALIC);
                     break;
-                case UNDERLINE:
+                case SpanStyles.UNDERLINE:
                     style = new UnderlineSpan();
                     break;
                 default:

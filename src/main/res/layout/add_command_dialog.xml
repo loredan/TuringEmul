@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:divider="@android:drawable/divider_horizontal_bright">
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/current_state"
+                android:textSize="40sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/current_tape_symbol"
+                android:textSize="40sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/arrow"
+                android:textSize="40sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/changed_tape_symbol"
+                android:textSize="40sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/changed_tape_position"
+                android:textSize="40sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/changed_state"
+                android:textSize="40sp"/>
+
+    </LinearLayout>
+
+    <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+        <Button
+                android:layout_width="@dimen/button"
+                android:layout_height="@dimen/button"
+                android:text="L"
+                android:id="@+id/action_left"
+                android:textSize="@dimen/text_size"/>
+
+        <Button
+                android:layout_width="@dimen/button"
+                android:layout_height="fill_parent"
+                android:text="H"
+                android:id="@+id/action_halt"
+                android:textSize="@dimen/text_size"/>
+
+        <Button
+                android:layout_width="@dimen/button"
+                android:layout_height="fill_parent"
+                android:text="R"
+                android:id="@+id/action_right"
+                android:textSize="@dimen/text_size"/>
+    </RadioGroup>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        <fragment
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.turingemul.AlphabetFragment"
+                android:id="@id/inner_alphabet"
+                tools:layout="@layout/alphabet"
+                />
+
+        <fragment
+                tools:layout="@layout/alphabet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.turingemul.AlphabetFragment"
+                android:id="@id/outer_alphabet"
+                android:layout_weight="0.5"/>
+
+    </LinearLayout>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Add"
+            android:id="@+id/btn_add_command"/>
+
+</LinearLayout>
