@@ -1,15 +1,11 @@
 package com.turingemul;
 
-import android.text.Spannable;
 import android.text.SpannedString;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.NavigableMap;
-import java.util.SortedMap;
 
 /**
  * Created by Loredan on 02.09.13.
@@ -30,7 +26,7 @@ public class Program
         inAB.add(0, temp);
 
         temp = new Symbol("S0");
-        temp.addSpan(Symbol.SUBSCRIPT, 1, 2);
+        temp.addSpan(SpanStyles.SUBSCRIPT, 1, 2);
         //temp.setSpan(new SubscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //temp.setSpan(new RelativeSizeSpan((float) 0.75), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         inAB.add(1, temp);

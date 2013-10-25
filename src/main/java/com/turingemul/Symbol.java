@@ -12,7 +12,6 @@ import android.text.style.SuperscriptSpan;
 import android.text.style.UnderlineSpan;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by loredan on 18.09.13.
@@ -20,8 +19,8 @@ import java.util.List;
 public class Symbol
 {
     private String base;
-    private List<SpanElement> spans;
-    private static class SpanElement
+    private ArrayList<SpanElement> spans;
+    public static class SpanElement
     {
         private int style;
         private int begin;
@@ -44,6 +43,10 @@ public class Symbol
         {
             return end;
         }
+        public void setEnd(int index)
+        {
+            end = index;
+        }
     }
     public Symbol(String _base)
     {
@@ -53,6 +56,10 @@ public class Symbol
     public void addSpan(int style, int begin, int end)
     {
         SpanElement span = new SpanElement(style, begin, end);
+        spans.add(span);
+    }
+    public void addSpan(SpanElement span)
+    {
         spans.add(span);
     }
     public Spannable getSymbol()
@@ -86,5 +93,15 @@ public class Symbol
             symbol.setSpan(style, span.getBegin(), span.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return symbol;
+    }
+
+    public String getBase()
+    {
+        return base;
+    }
+
+    public ArrayList<SpanElement> getSpans()
+    {
+        return spans;
     }
 }

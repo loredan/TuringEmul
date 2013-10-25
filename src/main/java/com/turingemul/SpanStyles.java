@@ -20,22 +20,22 @@ public class SpanStyles
 
         symbol = new Symbol("sp");
         symbol.addSpan(SUPERSCRIPT, 0, 2);
-        spans.add(symbol);
+        spans.add(SUPERSCRIPT, symbol);
 
         symbol = new Symbol("sb");
         symbol.addSpan(SUBSCRIPT, 0, 2);
-        spans.add(symbol);
+        spans.add(SUBSCRIPT, symbol);
 
         symbol = new Symbol("B");
         symbol.addSpan(BOLD, 0, 1);
-        spans.add(symbol);
+        spans.add(BOLD, symbol);
 
         symbol = new Symbol("I");
         symbol.addSpan(ITALIC, 0, 1);
-        spans.add(symbol);
+        spans.add(ITALIC, symbol);
 
         symbol = new Symbol("U");
         symbol.addSpan(UNDERLINE, 0, 1);
-        spans.add(symbol);
+        spans.add(UNDERLINE, symbol);
     }
 }

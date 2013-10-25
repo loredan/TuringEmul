@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="inner_alphabet" type="id">0</item>
+    <item name="outer_alphabet" type="id">1</item>
+    <item name="symbol" type="id">2</item>
+    <item name="edit" type="id">3</item>
+    <item name="display" type="id">4</item>
+
+</resources>

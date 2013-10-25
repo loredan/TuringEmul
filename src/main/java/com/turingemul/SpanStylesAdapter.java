@@ -1,22 +1,27 @@
 package com.turingemul;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ToggleButton;
+
+import java.util.ArrayList;
 
 /**
  * Created by loredan on 01.10.13.
  */
 public class SpanStylesAdapter extends BaseAdapter
 {
-    LayoutInflater lInflater;
+    Context context;
+    ArrayList<ToggleButton> buttons;
+    View.OnClickListener listener;
 
-    public SpanStylesAdapter(Context context)
+    public SpanStylesAdapter(Context _context, View.OnClickListener _listener)
     {
-        lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        context = _context;
+        buttons = new ArrayList<ToggleButton>();
+        listener = _listener;
     }
 
     @Override
@@ -28,7 +33,7 @@ public class SpanStylesAdapter extends BaseAdapter
     @Override
     public Object getItem(int i)
     {
-        return SpanStyles.spans.get(i);
+        return buttons.get(i);
     }
 
     @Override
@@ -41,8 +46,11 @@ public class SpanStylesAdapter extends BaseAdapter
     public View getView(int i, View view, ViewGroup viewGroup)
     {
         if(view==null)
-            view = lInflater.inflate(R.layout.alphabet_element, null);
-        ((Button) view.findViewById(R.id.symbol)).setText(SpanStyles.spans.get(i).getSymbol());
+            view = new ToggleButton(context);
+        view.setOnClickListener(listener);
+        view.setLayoutParams(new ViewGroup.LayoutParams(R.dimen.button, R.dimen.button));
+        ((ToggleButton) view).setText(SpanStyles.spans.get(i).getSymbol());
+        buttons.add(i, (ToggleButton) view);
         return null;
     }
 }
